@@ -17,6 +17,7 @@ Then run
 to get an example. The example simulate a simple dataset to test the function. Also, see
 
 > ?Predict
+
 for the predicting function.
 
 
