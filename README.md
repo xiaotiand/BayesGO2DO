@@ -14,8 +14,10 @@ Then run
 > 
 > ?Main
 
-to get an example.
+to get an example. The example simulate a simple dataset to test the function. Also, see
 
+> ?Predict
+for the predicting function.
 
 
 
