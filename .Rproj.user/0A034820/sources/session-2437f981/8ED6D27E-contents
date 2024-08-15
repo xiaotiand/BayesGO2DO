@@ -1,0 +1,49 @@
+### Initialize parameters
+library(GOSemSim)
+library(DOSE)
+
+K = 5
+Nk = c(63, 264, 505, 470, 415)
+lower = c(0.55, 0.55, 0.55, 0.55, 0.55)
+upper = c(0.6, 0.6, 0.6, 0.6, 0.6)
+
+X = readRDS("X.rds")
+X = lapply(X, as.matrix)
+G = dim(X[[1]])[2]
+hsGO = godata('org.Hs.eg.db', keytype = "SYMBOL", ont = "MF", computeIC = FALSE)
+ETA = mgeneSim(names(as.data.frame(X[[1]])), semData = hsGO, measure = "Wang", 
+               combine = "BMA", verbose = FALSE)
+S = doSim(c("DOID:4471", "DOID:4467", "DOID:4465", "DOID:3910", "DOID:3907"), 
+          c("DOID:4471", "DOID:4467", "DOID:4465", "DOID:3910", "DOID:3907"), measure = "Wang")
+
+for (set in 1:50) {
+  GAMMA = matrix(0, nrow = K, ncol = G)
+  GAMMA[1, 1:6] = 1
+  GAMMA[2, 1:6] = 1
+  GAMMA[3, 1:6] = 1
+  GAMMA[4, 1:6] = 1
+  GAMMA[5, 1:6] = 1
+  Y = lapply(Nk, function(l) rep(0, l))
+  Ytrue = Y
+  BETA = matrix(0, nrow = K, ncol = G)
+  sigma = lapply(Nk, function(l) rep(0, l))
+  ck = list(N1 = rep(1, Nk[1]), N2 = rep(2, Nk[2]), 
+            N3 = rep(3, Nk[3]), N4 = rep(4, Nk[4]), 
+            N5 = rep(5, Nk[5]))
+  delta = list()
+  
+  set.seed(1000000 + set)
+  for (k in 1:K) {
+    BETA[k, ] = rep(1, G)
+    sigma[[k]] = rnorm(Nk[k], 0, 1)
+    Y[[k]] = X[[k]] %*% (GAMMA[k, ] * BETA[k, ]) + sigma[[k]]
+    ck[[k]] = runif(Nk[k], quantile(Y[[k]], lower[k]), quantile(Y[[k]], upper[k]))
+    delta[[k]] = as.numeric(Y[[k]] <= ck[[k]])
+    Ytrue[[k]] = Y[[k]]
+    Y[[k]] = pmin(Y[[k]], ck[[k]])
+  }
+  censor_ratio = length(which(unlist(delta) == 0)) / length(unlist(delta))
+  cr2 = unlist(lapply(delta, function(x) length(which(x == 0)) / length(x)))
+  
+  save.image(file = paste(set, ".RData", sep = ""))
+}

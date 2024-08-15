@@ -1,0 +1,19 @@
+library(survcomp)
+library(glmnet)
+source("Prediction.R")
+rep = 50
+K = 5
+
+set=1
+load(paste("MAIN", set, ".RData", sep = ""))
+source("Prediction.R")
+Ypred1 = Predict(res, Y, X, burnin = 3000)
+rm(res)
+
+load(paste("NDS", set, ".RData", sep = ""))
+source("Prediction.R")
+Ypred2 = Predict(res, Y, X, burnin = 3000)
+rm(res)
+
+save.image(file = paste("Pred", set, ".RData", sep = ""))
+

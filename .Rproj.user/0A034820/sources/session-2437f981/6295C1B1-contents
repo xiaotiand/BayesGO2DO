@@ -1,0 +1,14 @@
+### Initialize parameters
+K = 5
+Nk = c(63, 264, 505, 470, 415)
+source("Main.R")
+source("Estimate.R")
+
+set=1
+
+load(paste(set, ".RData", sep = ""))
+
+t0 = Sys.time()
+res = Main(Y, delta, X, iteration = 5000, burnin = 3500, nchain = 1, ETA = ETA, S = S)
+Sys.time() - t0
+save.image(file = paste("MAIN", set, ".RData", sep = ""))
