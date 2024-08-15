@@ -4,7 +4,7 @@
 \alias{Predict}
 \title{Cross-validated prediction function}
 \usage{
-Predict(res, Y, X, burnin, nfold = NULL, ich = 1)
+Predict(res, Y, X, Xc = NULL, burnin, ich = 1)
 }
 \arguments{
 \item{res}{The model output from the Main() function}
@@ -12,6 +12,8 @@ Predict(res, Y, X, burnin, nfold = NULL, ich = 1)
 \item{Y}{A list of response values in regressions}
 
 \item{X}{A list of design matrices in regressions}
+
+\item{Xc}{A list of covariate matrices}
 
 \item{burnin}{The number of burn-in iterations}
 
