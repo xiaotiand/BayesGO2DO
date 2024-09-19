@@ -1,4 +1,4 @@
-Package: GO2DO
+Package: BayesGO2DO
 Type: Package
 Title: Genomic selection with GO and DO
 Version: 0.1.0
