@@ -1,4 +1,4 @@
-# GO2DO
+# BayesGO2DO
 A Bayesian genomic selection framework incorporating gene ontology (GO) and disease ontology (DO) information
 
 An R package for a Bayesian genomic selection framework. The framework incorporates GO and DO as prior biological information when performing genomic selections in multiple cancer subtypes. 
