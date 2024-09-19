@@ -6,11 +6,11 @@ The framework can account for functional similarities of genes and ontology simi
 
 The package can be installed by running:
 
-> devtools::install_github("xiaotiand/GO2DO")
+> devtools::install_github("xiaotiand/BayesGO2DO")
 
 Then run 
 
-> library(GO2DO)
+> library(BayesGO2DO)
 > 
 > ?Main
 
